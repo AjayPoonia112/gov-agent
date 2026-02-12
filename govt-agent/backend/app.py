@@ -60,118 +60,62 @@ def home():
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <title>Gov Agent</title>
       <style>
-        :root{
-          --bg: #0f172a;
-          --card: #111827;
-          --accent: #22d3ee;
-          --text: #e5e7eb;
-          --muted: #9ca3af;
-        }
-        * { box-sizing: border-box; }
         body {
           margin:0; padding:0;
-          font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-          background: radial-gradient(1200px 600px at 80% -10%, rgba(34,211,238,0.15), transparent 60%), var(--bg);
-          color: var(--text);
-          min-height: 100dvh;
-          display: grid;
-          place-items: center;
+          font-family: Inter, system-ui, sans-serif;
+          background:#0f172a;
+          color:#e5e7eb;
+          display:flex;
+          justify-content:center;
+          align-items:center;
+          min-height:100vh;
         }
         .card {
-          width: min(680px, 92vw);
-          background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-          border: 1px solid rgba(255,255,255,0.08);
-          border-radius: 16px;
-          padding: 28px 28px 24px;
-          backdrop-filter: blur(8px);
-          box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+          background:#111827;
+          padding:32px;
+          border-radius:16px;
+          max-width:750px;
+          width:92%;
+          border:1px solid rgba(255,255,255,0.1);
         }
-        .badge {
-          display: inline-flex; align-items: center; gap: 8px;
-          background: rgba(34,211,238,0.12);
-          color: #a5f3fc;
-          padding: 6px 10px;
-          border: 1px solid rgba(34,211,238,0.35);
-          border-radius: 999px;
-          font-size: 12px; letter-spacing: .35px;
+        h1 { font-size:32px; color:#22d3ee; margin-bottom:8px; }
+        .subtitle { color:#cbd5e1; margin-bottom:20px; }
+        .section-title { margin-top:24px; color:#38bdf8; font-size:20px; }
+        .image-row {
+          display:flex;
+          gap:16px;
+          flex-wrap:wrap;
+          margin-top:12px;
         }
-        h1 {
-          margin: 14px 0 10px;
-          font-size: clamp(24px, 3.5vw, 34px);
-          line-height: 1.2;
-        }
-        p.lead { color: var(--muted); margin: 0 0 18px; font-size: 15px; }
-        .cta {
-          display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px;
-        }
-        .btn {
-          appearance: none; border: 0; cursor: pointer;
-          border-radius: 12px; padding: 12px 16px; font-weight: 600;
-          transition: transform .06s ease, box-shadow .2s ease, background .2s ease;
-        }
-        .btn-primary {
-          background: linear-gradient(90deg, #22d3ee, #06b6d4);
-          color: #06232a; box-shadow: 0 8px 22px rgba(34,211,238,0.35);
-        }
-        .btn-primary:hover { transform: translateY(-1px); }
-        .btn-ghost {
-          background: rgba(255,255,255,0.06); color: var(--text);
-          border: 1px solid rgba(255,255,255,0.12);
-        }
-        .grid {
-          display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 22px;
-        }
-        .feature {
-          background: rgba(255,255,255,0.04);
-          border: 1px solid rgba(255,255,255,0.08);
-          border-radius: 12px; padding: 14px;
-        }
-        .feature h3 { margin: 0 0 6px; font-size: 14px; }
-        .muted { color: var(--muted); font-size: 13px; }
-        .footer {
-          margin-top: 18px; display:flex; justify-content: space-between; align-items:center;
-          color: var(--muted); font-size: 12px;
-        }
-        @media (max-width: 720px) {
-          .grid { grid-template-columns: 1fr; }
+        .image-row img {
+          width:160px;
+          height:160px;
+          object-fit:cover;
+          border-radius:12px;
+          border:1px solid rgba(255,255,255,0.1);
         }
       </style>
     </head>
     <body>
-      <main class="card" role="main" aria-label="Government Scheme Eligibility Agent">
-        <span class="badge" aria-label="Status badge">✅ Live • Gov Agent</span>
-        <h1>How are you, <span style="color:#22d3ee">Shreya</span>?</h1>
-        <p class="lead">Welcome to your Government Scheme Eligibility Assistant. Check your eligibility, get step-by-step instructions, and download a personalized guide.</p>
+      <div class="card">
+        <h1>How are you, Shreya?</h1>
+        <p class="subtitle">Here are your hobbies — sleeping & eating ❤️</p>
 
-        <div class="cta">
-          <a class="btn btn-primary" href="/healthz" aria-label="Check API Health">Check API Health</a>
-          <a class="btn btn-ghost" href="https://wa.me/14155238886" target="_blank" rel="noreferrer" aria-label="Open WhatsApp Sandbox">Open WhatsApp Sandbox</a>
+        <div class="section-title">🐻 Cute Bears</div>
+        <div class="image-row">
+          <img src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131" alt="Bear 1">
+          <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d" alt="Bear 2">
         </div>
 
-        <div class="grid" aria-label="Highlights">
-          <div class="feature">
-            <h3>🎯 Simple Questions</h3>
-            <div class="muted">Answer in Bengali / Hindi / English. We’ll ask only what’s needed.</div>
-          </div>
-          <div class="feature">
-            <h3>⚖️ Eligibility Match</h3>
-            <div class="muted">Rules-based engine maps your profile to central & state schemes.</div>
-          </div>
-          <div class="feature">
-            <h3>🧾 PDF Guide</h3>
-            <div class="muted">Get a one‑page personalized guide with steps and documents.</div>
-          </div>
-          <div class="feature">
-            <h3>💬 WhatsApp First</h3>
-            <div class="muted">Chat from your phone; perfect for low‑literacy & low‑bandwidth users.</div>
-          </div>
+        <div class="section-title">🍦 Ice‑Cream Time</div>
+        <div class="image-row">
+          <img src="https://images.unsplash.com/photo-1560807707-8cc77767d783" alt="Ice Cream 1">
+          <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348" alt="Ice Cream 2">
         </div>
 
-        <div class="footer">
-          <span>Made for communities • Kolkata</span>
-          <span>v0.1 • FastAPI on Render</span>
-        </div>
-      </main>
+        <div class="section-title">✨ Welcome to Gov-Agent!</div>
+        <p class="subtitle">You can now explore government scheme eligibility, WhatsApp bot, and more!</p>
+      </div>
     </body>
     </html>
     """
@@ -278,3 +222,4 @@ async def whatsapp_webhook(request: Request):
     SESSIONS[from_] = session
 
     return Response(content=str(resp), media_type="application/xml")
+
