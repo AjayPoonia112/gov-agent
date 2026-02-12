@@ -53,73 +53,189 @@ from fastapi.responses import HTMLResponse
 @app.get("/", response_class=HTMLResponse)
 def home():
     return """
-    <!doctype html>
-    <html lang="en">
-    <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <title>Gov Agent</title>
-      <style>
-        body {
-          margin:0; padding:0;
-          font-family: Inter, system-ui, sans-serif;
-          background:#0f172a;
-          color:#e5e7eb;
-          display:flex;
-          justify-content:center;
-          align-items:center;
-          min-height:100vh;
-        }
-        .card {
-          background:#111827;
-          padding:32px;
-          border-radius:16px;
-          max-width:750px;
-          width:92%;
-          border:1px solid rgba(255,255,255,0.1);
-        }
-        h1 { font-size:32px; color:#22d3ee; margin-bottom:8px; }
-        .subtitle { color:#cbd5e1; margin-bottom:20px; }
-        .section-title { margin-top:24px; color:#38bdf8; font-size:20px; }
-        .image-row {
-          display:flex;
-          gap:16px;
-          flex-wrap:wrap;
-          margin-top:12px;
-        }
-        .image-row img {
-          width:160px;
-          height:160px;
-          object-fit:cover;
-          border-radius:12px;
-          border:1px solid rgba(255,255,255,0.1);
-        }
-      </style>
-    </head>
-    <body>
-      <div class="card">
-        <h1>How are you, Shreya?</h1>
-        <p class="subtitle">Here are your hobbies — sleeping & eating ❤️</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Shreya's Interactive Space ✨</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --bg1:#0f172a; --bg2:#1e293b; --accent:#22d3ee; --accent2:#38bdf8; --text:#e2e8f0; --muted:#94a3b8;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; padding:0; font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+    background: linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg1));
+    background-size: 300% 300%;
+    animation: bgflow 12s ease infinite;
+    color: var(--text); overflow-x:hidden;
+  }
+  @keyframes bgflow{0%{background-position:0 50%}50%{background-position:100% 50%}100%{background-position:0 50%}}
 
-        <div class="section-title">🐻 Cute Bears</div>
-        <div class="image-row">
-          <img src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131" alt="Bear 1">
-          <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d" alt="Bear 2">
+  .container{max-width:1100px; margin:auto; padding:48px 20px; animation:fadeIn 1.1s ease-out}
+  @keyframes fadeIn{from{opacity:0; transform: translateY(24px);}to{opacity:1; transform: translateY(0);}}
+
+  .title{
+    font-size: clamp(28px, 4.8vw, 48px); font-weight: 800; text-align:center; margin: 0 0 8px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), #a5f3fc);
+    -webkit-background-clip: text; color: transparent; animation: float 3s ease-in-out infinite;
+  }
+  @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
+
+  .subtitle{ text-align:center; color:var(--muted); margin:0 0 22px; }
+
+  .actions{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:26px; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px; padding:12px 16px; border-radius:12px; font-weight:700;
+    text-decoration:none; transition: transform .08s ease, box-shadow .25s ease, background .25s ease;
+  }
+  .btn:hover{ transform: translateY(-1px); }
+  .btn-primary{
+    background: linear-gradient(90deg, var(--accent), var(--accent2)); color:#06232a;
+    box-shadow: 0 8px 22px rgba(34,211,238,0.35);
+  }
+  .btn-ghost{
+    background: rgba(255,255,255,0.06); color:var(--text); border:1px solid rgba(255,255,255,0.12);
+  }
+
+  .grid{
+    display:grid; grid-template-columns: repeat(12, 1fr); gap:18px; margin-top: 10px;
+  }
+  .card{
+    grid-column: span 12;
+    background: rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:18px; padding:20px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+    backdrop-filter: blur(10px);
+    transition: transform .25s ease;
+  }
+  .card:hover{ transform: translateY(-3px); }
+
+  .section-title{ font-size:20px; color: var(--accent2); margin:4px 0 12px; font-weight:800; letter-spacing:.3px; }
+
+  .hobbies{ display:flex; gap:12px; flex-wrap:wrap; }
+  .badge{
+    padding:10px 14px; border-radius:12px; font-weight:700;
+    background: rgba(34,211,238,0.18); border:1px solid rgba(34,211,238,0.38);
+    animation: pulse 2.6s infinite;
+  }
+  @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
+
+  .image-row{ display:flex; flex-wrap:wrap; gap:16px; margin-top:8px; }
+  .image-row a{ display:inline-block; border-radius:16px; overflow:hidden; }
+  .image-row img{
+    width: 220px; height: 220px; object-fit: cover; display:block;
+    transition: transform .35s ease, box-shadow .35s ease; border:1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.5);
+  }
+  .image-row img:hover{ transform: scale(1.12) rotate(2deg); box-shadow: 0 12px 28px rgba(34,211,238,0.45); }
+
+  /* Responsive columns */
+  @media (min-width: 740px){
+    .span-6{ grid-column: span 6; }
+  }
+
+  .video-wrap{
+    position: relative; padding-top: 56.25%; /* 16:9 */
+    width: 100%; border-radius: 16px; overflow: hidden; border:1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.45); background: #0b1324; margin-top: 12px;
+  }
+  .video-wrap iframe{
+    position:absolute; top:0; left:0; width:100%; height:100%; border:0;
+  }
+
+  .footer{ color:var(--muted); text-align:center; margin-top:16px; font-size:12px; }
+</style>
+</head>
+<body>
+
+  <div class="container">
+    <h1 class="title">How are you, Shreya? 💙</h1>
+    <p class="subtitle">Welcome to your interactive space — hobbies, cute vibes, and your channel!</p>
+
+    <div class="actions">
+      <a class="btn btn-primary" href="https://www.youtube.com/@somewhatshreyaa" target="_blank" rel="noopener">
+        ▶️ Visit Shreya’s YouTube Channel
+      </a>
+      <a class="btn btn-ghost" href="/healthz">🩺 Check API Health</a>
+    </div>
+
+    <section class="grid">
+      <div class="card span-6">
+        <div class="section-title">💫 Your Hobbies</div>
+        <div class="hobbies">
+          <span class="badge">😴 Sleeping</span>
+          <span class="badge">🍽️ Eating</span>
+          <span class="badge">🎶 Music</span>
+          <span class="badge">📷 Aesthetic Pics</span>
         </div>
-
-        <div class="section-title">🍦 Ice‑Cream Time</div>
-        <div class="image-row">
-          <img src="https://images.unsplash.com/photo-1560807707-8cc77767d783" alt="Ice Cream 1">
-          <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348" alt="Ice Cream 2">
-        </div>
-
-        <div class="section-title">✨ Welcome to Gov-Agent!</div>
-        <p class="subtitle">You can now explore government scheme eligibility, WhatsApp bot, and more!</p>
       </div>
-    </body>
-    </html>
+
+      <div class="card span-6">
+        <div class="section-title">📣 Channel Spotlight</div>
+        <p style="margin:0 0 8px;color:var(--muted)">Click to explore your latest shorts & videos on YouTube.</p>
+        <a class="btn btn-primary" href="https://www.youtube.com/@somewhatshreyaa" target="_blank" rel="noopener">Open Channel</a>
+      </div>
+
+      <div class="card">
+        <div class="section-title">🐻 Fresh Bear Pics</div>
+        <div class="image-row">
+          <!-- Bear Images (new set) -->
+          <a href="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=1600&q=60" target="_blank" rel="noopener">
+            <img src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=600&q=60" alt="Cute bear 1">
+          </a>
+          <a href="https://images.unsplash.com/photo-1508672019048-805c876b67e2?auto=format&fit=crop&w=1600&q=60" target="_blank" rel="noopener">
+            <img src="https://images.unsplash.com/photo-1508672019048-805c876b67e2?auto=format&fit=crop&w=600&q=60" alt="Polar bear">
+          </a>
+          <a href="https://images.unsplash.com/photo-1471193945509-9ad0617afabf?auto=format&fit=crop&w=1600&q=60" target="_blank" rel="noopener">
+            <img src="https://images.unsplash.com/photo-1471193945509-9ad0617afabf?auto=format&fit=crop&w=600&q=60" alt="Brown bear closeup">
+          </a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">🍦 Ice‑Cream Aesthetic</div>
+        <div class="image-row">
+          <!-- Ice-cream Images (new set) -->
+          <a href="https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?auto=format&fit=crop&w=1600&q=60" target="_blank" rel="noopener">
+            <img src="https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?auto=format&fit=crop&w=600&q=60" alt="Ice-cream cones">
+          </a>
+          <a href="https://images.unsplash.com/photo-1542444459-db63c9f5f10d?auto=format&fit=crop&w=1600&q=60" target="_blank" rel="noopener">
+            <img src="https://images.unsplash.com/photo-1542444459-db63c9f5f10d?auto=format&fit=crop&w=600&q=60" alt="Scoop of ice-cream">
+          </a>
+          <a href="https://images.unsplash.com/photo-1464347744102-11db6282f854?auto=format&fit=crop&w=1600&q=60" target="_blank" rel="noopener">
+            <img src="https://images.unsplash.com/photo-1464347744102-11db6282f854?auto=format&fit=crop&w=600&q=60" alt="Colorful ice-cream">
+          </a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">🎬 Featured Short</div>
+        <p style="margin:0 0 8px;color:var(--muted)">Enjoy this YouTube Short right here on the page.</p>
+        <div class="video-wrap">
+          <!-- Embed Shorts: switch /shorts/{id} → /embed/{id} -->
+          <iframe
+            src="https://www.youtube.com/embed/0yGxtEFgO5g"
+            title="YouTube Shorts"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div style="margin-top:10px;">
+          <a class="btn btn-ghost" href="https://www.youtube.com/shorts/0yGxtEFgO5g" target="_blank" rel="noopener">Open on YouTube ↗</a>
+        </div>
+      </div>
+
+    </section>
+
+    <div class="footer">Made with 💙 • Interactive UI • FastAPI on Render</div>
+  </div>
+</body>
+</html>
     """
-    #--------------
+#--------------
     #test shreya
     #--------------------
 
@@ -222,4 +338,5 @@ async def whatsapp_webhook(request: Request):
     SESSIONS[from_] = session
 
     return Response(content=str(resp), media_type="application/xml")
+
 
