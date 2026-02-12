@@ -1,0 +1,34 @@
+[
+  {
+    "scheme_id": "pm_kisan",
+    "scheme_name": "PM-KISAN",
+    "eligibility_conditions": [
+      {"field": "occupation", "op": "eq", "value": "farmer"},
+      {"field": "land_owned", "op": "eq", "value": true}
+    ],
+    "documents_required": ["Aadhaar", "Bank Passbook", "Land Record"],
+    "application_steps": [
+      "Visit CSC or official PM-KISAN portal.",
+      "Provide Aadhaar and land ownership details.",
+      "Link your bank account for DBT."
+    ],
+    "official_url": "VERIFY_LIVE_URL",
+    "benefits": "₹6,000 per year in 3 installments (verify latest)."
+  },
+  {
+    "scheme_id": "pmjay",
+    "scheme_name": "Ayushman Bharat (PM-JAY)",
+    "eligibility_conditions": [
+      {"field": "annual_income", "op": "lte", "value": 500000},
+      {"field": "has_ration_card", "op": "eq", "value": true}
+    ],
+    "documents_required": ["Aadhaar", "Ration Card", "Address Proof"],
+    "application_steps": [
+      "Check eligibility on PM-JAY portal or visit the nearest CSC.",
+      "Submit Aadhaar and ration card for verification.",
+      "Receive e-card approval."
+    ],
+    "official_url": "VERIFY_LIVE_URL",
+    "benefits": "₹5 lakh hospitalization coverage per family (verify latest)."
+  }
+]
