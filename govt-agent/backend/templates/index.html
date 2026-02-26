@@ -3,16 +3,18 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Are you… Bhaluu? 🐻</title>
+  <title>Heloooo… Bhaluu? 🐻</title>
 
   <!-- Fonts & Animations -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600=swap
+  <link href="https://apis.com/css2?family=Poppins:wght@400;600;800&display=swap
   https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css
 
-  <link rel="icon" href="{{
+  <!-- Favicon (optional; place static/favicon.ico to enable) -->
+  {{ url_for(
 
-  <!-- Confetti (tiny, client-side) -->
-  <script defer src="https://m/canvas-confetti@1.9.3/dist/confetti.browser.min.js</script>
+  <!-- App Styles -->
+  <link rel="stylesheet" href="{{iny, client-side) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/canvas-confettii.browser.min.js</script>
 
   <!-- App JS -->
   {{ url_for(</script>
@@ -47,6 +49,7 @@
 
     <hr class="divider"/>
 
+    <!-- Channel section -->
     <section class="channel">
       <h2>🎬 Channel</h2>
       <p class="channel-meta">
@@ -61,10 +64,8 @@
           src="https://www.youtube.com/embed/{{ video_id }}"
           title="YouTube video"
           frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media
-
-  <!-- Error Modal -->
-  <div id="errorModal" class="modal hidden">
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+         div id="errorModal" class="modal hidden">
     <div class="modal-card animate__animated animate__shakeX">
       <div class="modal-icon error">🚫</div>
       <h3>Oops!</h3>
@@ -88,14 +89,13 @@
     <span>Made with 💙 for fun — not a real-world identity checker.</span>
   </footer>
 
-  {# If you later add inline JS that contains {{ or {% use raw/endraw to avoid Jinja conflicts #}
+  {# If you ever embed inline JS containing {{ or {% use raw/endraw to avoid Jinja parsing #}
   {% raw %}
-  <!-- Example guard: 
+  <!-- Example:
   <script>
-    // code that might include {{ ... }} (keep inside raw/endraw)
+    // code that might include {{ ... }}
   </script>
   -->
   {% endraw %}
 </body>
 </html>
-``
