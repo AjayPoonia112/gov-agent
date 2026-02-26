@@ -349,7 +349,6 @@ def home():
 </body>
 </html>
 """
-    """
 #--------------
     #test shreya
     #--------------------
@@ -453,6 +452,7 @@ async def whatsapp_webhook(request: Request):
     SESSIONS[from_] = session
 
     return Response(content=str(resp), media_type="application/xml")
+
 
 
 
