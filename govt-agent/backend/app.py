@@ -48,7 +48,10 @@ def health():
 #------------------
 #Test Shreya
 #--------------------
+from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
+
+app = FastAPI()
 
 @app.get("/", response_class=HTMLResponse)
 def home():
@@ -56,39 +59,55 @@ def home():
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Shreya's Interactive Space ✨</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Shreya • Identity Check ✨</title>
 <style>
   :root{
     --bg1:#0f172a; --bg2:#1e293b; --accent:#22d3ee; --accent2:#38bdf8; --text:#e2e8f0; --muted:#94a3b8;
+    --ok:#10b981; --warn:#f59e0b; --err:#ef4444;
   }
   *{box-sizing:border-box}
   body{
     margin:0; padding:0; font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
     background: linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg1));
-    background-size: 300% 300%;
-    animation: bgflow 12s ease infinite;
+    background-size: 300% 300%; animation: bgflow 12s ease infinite;
     color: var(--text); overflow-x:hidden;
   }
   @keyframes bgflow{0%{background-position:0 50%}50%{background-position:100% 50%}100%{background-position:0 50%}}
-
-  .container{max-width:1100px; margin:auto; padding:48px 20px; animation:fadeIn 1.1s ease-out}
-  @keyframes fadeIn{from{opacity:0; transform: translateY(24px);}to{opacity:1; transform: translateY(0);}}
-
+  .container{max-width:1100px; margin:auto; padding:48px 18px; animation:fadeIn 0.9s ease-out}
+  @keyframes fadeIn{from{opacity:0; transform: translateY(18px);}to{opacity:1; transform: translateY(0);}}
   .title{
-    font-size: clamp(28px, 4.8vw, 48px); font-weight: 800; text-align:center; margin: 0 0 8px;
+    font-size: clamp(28px, 4.6vw, 48px); font-weight: 800; text-align:center; margin: 0 0 8px;
     background: linear-gradient(90deg, var(--accent), var(--accent2), #a5f3fc);
     -webkit-background-clip: text; color: transparent; animation: float 3s ease-in-out infinite;
   }
-  @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
+  @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
+  .subtitle{ text-align:center; color:var(--muted); margin:0 0 20px; }
 
-  .subtitle{ text-align:center; color:var(--muted); margin:0 0 22px; }
+  .panel{
+    background: rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:18px; padding:18px; margin-top:12px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+    backdrop-filter: blur(10px);
+  }
+  .panel:hover{ transform: translateY(-2px); transition: transform .25s ease; }
 
-  .actions{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:26px; }
+  .section-title{ font-size:20px; color: var(--accent2); margin:4px 0 12px; font-weight:800; letter-spacing:.3px; display:flex; align-items:center; gap:8px;}
+  .row{ display:flex; flex-wrap:wrap; gap:14px; align-items:center; }
+  .input{
+    flex:1 1 260px; display:flex; align-items:center; gap:10px;
+    background: rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.14);
+    padding:12px 14px; border-radius:14px;
+  }
+  .input input{
+    width:100%; background: transparent; color:var(--text); border:0; outline:0; font-size:16px;
+  }
   .btn{
     display:inline-flex; align-items:center; gap:8px; padding:12px 16px; border-radius:12px; font-weight:700;
-    text-decoration:none; transition: transform .08s ease, box-shadow .25s ease, background .25s ease;
+    text-decoration:none; transition: transform .08s ease, box-shadow .25s ease, background .25s ease; cursor:pointer; border:0;
   }
   .btn:hover{ transform: translateY(-1px); }
   .btn-primary{
@@ -99,44 +118,59 @@ def home():
     background: rgba(255,255,255,0.06); color:var(--text); border:1px solid rgba(255,255,255,0.12);
   }
 
-  .grid{
-    display:grid; grid-template-columns: repeat(12, 1fr); gap:18px; margin-top: 10px;
+  .gender-wrap{ display:none; margin-top:12px; }
+  .genders{ display:flex; gap:10px; flex-wrap:wrap; }
+  .radio{
+    position:relative; display:inline-flex; align-items:center; gap:10px;
+    padding:10px 12px; border-radius:12px; font-weight:700; cursor:pointer;
+    background: rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14);
+    user-select:none;
   }
-  .card{
-    grid-column: span 12;
-    background: rgba(255,255,255,0.08);
-    border:1px solid rgba(255,255,255,0.12);
-    border-radius:18px; padding:20px;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.35);
-    backdrop-filter: blur(10px);
-    transition: transform .25s ease;
-  }
-  .card:hover{ transform: translateY(-3px); }
-
-  .section-title{ font-size:20px; color: var(--accent2); margin:4px 0 12px; font-weight:800; letter-spacing:.3px; }
-
-  .hobbies{ display:flex; gap:12px; flex-wrap:wrap; }
-  .badge{
-    padding:10px 14px; border-radius:12px; font-weight:700;
-    background: rgba(34,211,238,0.18); border:1px solid rgba(34,211,238,0.38);
-    animation: pulse 2.6s infinite;
-  }
-  @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
-
-  .image-row{ display:flex; flex-wrap:wrap; gap:16px; margin-top:8px; }
-  .image-row a{ display:inline-block; border-radius:16px; overflow:hidden; }
-  .image-row img{
-    width: 220px; height: 220px; object-fit: cover; display:block;
-    transition: transform .35s ease, box-shadow .35s ease; border:1px solid rgba(255,255,255,0.12);
-    box-shadow: 0 4px 18px rgba(0,0,0,0.5);
-  }
-  .image-row img:hover{ transform: scale(1.12) rotate(2deg); box-shadow: 0 12px 28px rgba(34,211,238,0.45); }
-
-  /* Responsive columns */
-  @media (min-width: 740px){
-    .span-6{ grid-column: span 6; }
+  .radio input{ display:none; }
+  .radio span{ opacity:0.9 }
+  .radio:has(input:checked){
+    outline:2px solid var(--accent2); background: rgba(56,189,248,0.1);
+    box-shadow: 0 6px 18px rgba(56,189,248,0.25);
   }
 
+  .footer{ color:var(--muted); text-align:center; margin-top:18px; font-size:12px; }
+
+  /* Modal */
+  .modal{
+    position:fixed; inset:0; display:none; place-items:center; background: rgba(10,14,25,0.6);
+    z-index: 50; padding:16px;
+  }
+  .modal.show{ display:grid; animation: fadeIn .2s ease-out; }
+  .modal-card{
+    width:min(560px, 96vw);
+    background:linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.06));
+    border:1px solid rgba(255,255,255,0.14);
+    backdrop-filter: blur(12px);
+    border-radius:18px; padding:20px; text-align:center; position:relative; overflow:hidden;
+    animation: pop .18s ease-out;
+  }
+  @keyframes pop{from{transform:scale(.96); opacity:.6}to{transform:scale(1); opacity:1}}
+  .modal h3{ margin:4px 0 8px; font-size:22px }
+  .modal p{ margin:0; color:var(--text) }
+  .modal .ok{ color:var(--ok) }
+  .modal .err{ color:var(--err) }
+  .close{
+    position:absolute; top:10px; right:10px; border:0; background:transparent; color:var(--muted); font-size:20px; cursor:pointer;
+  }
+
+  /* Simple confetti using emoji */
+  .confetti{
+    position:absolute; left:0; top:0; width:100%; height:100%; pointer-events:none; overflow:hidden;
+  }
+  .piece{
+    position:absolute; font-size:22px; animation: fall 1800ms linear forwards;
+  }
+  @keyframes fall{
+    0%{ transform: translateY(-20px) rotate(0deg); opacity:1 }
+    100%{ transform: translateY(520px) rotate(420deg); opacity:0 }
+  }
+
+  /* Video responsive wrapper */
   .video-wrap{
     position: relative; padding-top: 56.25%; /* 16:9 */
     width: 100%; border-radius: 16px; overflow: hidden; border:1px solid rgba(255,255,255,0.12);
@@ -146,94 +180,175 @@ def home():
     position:absolute; top:0; left:0; width:100%; height:100%; border:0;
   }
 
-  .footer{ color:var(--muted); text-align:center; margin-top:16px; font-size:12px; }
+  .grid{ display:grid; grid-template-columns: repeat(12, 1fr); gap:16px; margin-top: 16px; }
+  .span-6{ grid-column: span 12; }
+  @media (min-width: 740px){ .span-6{ grid-column: span 6; } }
 </style>
 </head>
 <body>
-
   <div class="container">
     <h1 class="title">How are you, Shreya? 💙</h1>
-    <p class="subtitle">Welcome to your interactive space — hobbies, cute vibes, and your channel!</p>
+    <p class="subtitle">Identify yourself (with sparkles ✨) &mdash; then explore your channel!</p>
 
-    <div class="actions">
-      <a class="btn btn-primary" href="https://www.youtube.com/@somewhatshreyaa" target="_blank" rel="noopener">
-        ▶️ Visit Shreya’s YouTube Channel
-      </a>
-      <a class="btn btn-ghost" href="/healthz">🩺 Check API Health</a>
-    </div>
+    <!-- Name Panel -->
+    <section class="panel">
+      <div class="section-title">🧩 Step 1: Enter your name</div>
+      <div class="row">
+        <div class="input">
+          <span>👤</span>
+          <input id="name" type="text" placeholder="Type your name… e.g., shreya" />
+        </div>
+        <button id="nameGo" class="btn btn-primary">Continue →</button>
+      </div>
+      <p id="nameHint" style="margin:8px 2px 0; color:var(--muted); font-size:14px;">
+        Tip: The gender box unlocks only when the name is <strong>shreya</strong> (case-insensitive).
+      </p>
 
+      <!-- Gender Panel (hidden until name is shreya) -->
+      <div id="genderSection" class="gender-wrap">
+        <div class="section-title" style="margin-top:14px;">🐻 Step 2: Choose your gender</div>
+        <div class="genders" role="group" aria-label="Gender choices">
+          <label class="radio"> <input type="radio" name="gender" value="female" /> <span>💃 female</span> </label>
+          <label class="radio"> <input type="radio" name="gender" value="male" /> <span>🕺 male</span> </label>
+          <label class="radio"> <input type="radio" name="gender" value="angel" /> <span>😇 angel</span> </label>
+          <label class="radio"> <input type="radio" name="gender" value="bhaluu" /> <span>🐻 bhaluu</span> </label>
+        </div>
+        <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+          <button id="verify" class="btn btn-primary">Verify ✅</button>
+          <button id="reset" class="btn btn-ghost">Reset ↺</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Channel section (carried from your previous page) -->
     <section class="grid">
-      <div class="card span-6">
-        <div class="section-title">💫 Your Hobbies</div>
-        <div class="hobbies">
-          <span class="badge">😴 Sleeping</span>
-          <span class="badge">🍽️ Eating</span>
-          <span class="badge">🎶 Music</span>
-          <span class="badge">📷 Aesthetic Pics</span>
-        </div>
-      </div>
-
-      <div class="card span-6">
+      <div class="panel span-6">
         <div class="section-title">📣 Channel Spotlight</div>
-        <p style="margin:0 0 8px;color:var(--muted)">Click to explore your latest shorts & videos on YouTube.</p>
-        <a class="btn btn-primary" href="https://www.youtube.com/@somewhatshreyaa" target="_blank" rel="noopener">Open Channel</a>
+        <p style="margin:0 0 8px;color:var(--muted)">Click to explore your latest shorts &amp; videos on YouTube.</p>
+        https://www.youtube.com/@somewhatshreyaa▶️ Visit Shreya’s YouTube Channel</a>
+        <a class="btn btn-ghost" hrefa>
       </div>
-
-      <div class="card">
-        <div class="section-title">🐻 Fresh Bear Pics</div>
-        <div class="image-row">
-          <!-- Bear Images (new set) -->
-          <a href="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=1600&q=60" target="_blank" rel="noopener">
-            <img src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=600&q=60" alt="Cute bear 1">
-          </a>
-          <a href="https://images.unsplash.com/photo-1508672019048-805c876b67e2?auto=format&fit=crop&w=1600&q=60" target="_blank" rel="noopener">
-            <img src="https://images.unsplash.com/photo-1508672019048-805c876b67e2?auto=format&fit=crop&w=600&q=60" alt="Polar bear">
-          </a>
-          <a href="https://images.unsplash.com/photo-1471193945509-9ad0617afabf?auto=format&fit=crop&w=1600&q=60" target="_blank" rel="noopener">
-            <img src="https://images.unsplash.com/photo-1471193945509-9ad0617afabf?auto=format&fit=crop&w=600&q=60" alt="Brown bear closeup">
-          </a>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="section-title">🍦 Ice‑Cream Aesthetic</div>
-        <div class="image-row">
-          <!-- Ice-cream Images (new set) -->
-          <a href="https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?auto=format&fit=crop&w=1600&q=60" target="_blank" rel="noopener">
-            <img src="https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?auto=format&fit=crop&w=600&q=60" alt="Ice-cream cones">
-          </a>
-          <a href="https://images.unsplash.com/photo-1542444459-db63c9f5f10d?auto=format&fit=crop&w=1600&q=60" target="_blank" rel="noopener">
-            <img src="https://images.unsplash.com/photo-1542444459-db63c9f5f10d?auto=format&fit=crop&w=600&q=60" alt="Scoop of ice-cream">
-          </a>
-          <a href="https://images.unsplash.com/photo-1464347744102-11db6282f854?auto=format&fit=crop&w=1600&q=60" target="_blank" rel="noopener">
-            <img src="https://images.unsplash.com/photo-1464347744102-11db6282f854?auto=format&fit=crop&w=600&q=60" alt="Colorful ice-cream">
-          </a>
-        </div>
-      </div>
-
-      <div class="card">
+      <div class="panel span-6">
         <div class="section-title">🎬 Featured Short</div>
         <p style="margin:0 0 8px;color:var(--muted)">Enjoy this YouTube Short right here on the page.</p>
         <div class="video-wrap">
-          <!-- Embed Shorts: switch /shorts/{id} → /embed/{id} -->
           <iframe
             src="https://www.youtube.com/embed/0yGxtEFgO5g"
-            title="YouTube Shorts"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-          ></iframe>
-        </div>
-        <div style="margin-top:10px;">
-          <a class="btn btn-ghost" href="https://www.youtube.com/shorts/0yGxtEFgO5g" target="_blank" rel="noopener">Open on YouTube ↗</a>
+           style="margin-top:10px;">
+          https://www.youtube.com/shorts/0yGxtEFgO5gOpen on YouTube ↗</a>
         </div>
       </div>
-
     </section>
 
     <div class="footer">Made with 💙 • Interactive UI • FastAPI on Render</div>
   </div>
+
+  <!-- Modal -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <button class="close" aria-label="Close modal" onclick="closeModal()">✖</button>
+      <div id="confetti" class="confetti"></div>
+      <h3 id="modalTitle">Title</h3>
+      <p id="modalMsg">Message</p>
+    </div>
+  </div>
+
+<script>
+  const nameInput = document.getElementById('name');
+  const nameGo = document.getElementById('nameGo');
+  const nameHint = document.getElementById('nameHint');
+  const genderSection = document.getElementById('genderSection');
+  const verifyBtn = document.getElementById('verify');
+  const resetBtn = document.getElementById('reset');
+
+  function isShreya(val){
+    return (val || '').trim().toLowerCase() === 'shreya';
+  }
+
+  function showGenderSection(show){
+    genderSection.style.display = show ? 'block' : 'none';
+  }
+
+  function clearRadios(){
+    document.querySelectorAll('input[name="gender"]').forEach(r => r.checked = false);
+  }
+
+  function showModal(type, title, message){
+    const modal = document.getElementById('modal');
+    const titleEl = document.getElementById('modalTitle');
+    const msgEl = document.getElementById('modalMsg');
+    const confetti = document.getElementById('confetti');
+
+    titleEl.className = (type === 'ok') ? 'ok' : 'err';
+    titleEl.textContent = title;
+    msgEl.textContent = message;
+
+    // Reset confetti
+    confetti.innerHTML = '';
+    if(type === 'ok') {
+      // Simple emoji confetti
+      const icons = ['🎉','✨','💫','🐻','🌟','🎊'];
+      const pieces = 60;
+      for(let i=0;i<pieces;i++){
+        const span = document.createElement('span');
+        span.className = 'piece';
+        span.textContent = icons[Math.floor(Math.random()*icons.length)];
+        span.style.left = Math.random()*100 + '%';
+        span.style.top = (-20 - Math.random()*80) + 'px';
+        span.style.animationDelay = (Math.random()*0.5)+'s';
+        span.style.fontSize = (18 + Math.random()*12)+'px';
+        confetti.appendChild(span);
+      }
+    }
+    modal.classList.add('show');
+  }
+
+  function closeModal(){
+    document.getElementById('modal').classList.remove('show');
+  }
+
+  // UX: Press Enter in the name input to continue
+  nameInput.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter'){ nameGo.click(); }
+  });
+
+  nameGo.addEventListener('click', () => {
+    const val = nameInput.value;
+    if(isShreya(val)){
+      showGenderSection(true);
+      nameHint.innerHTML = '✅ Hi Shreya! Please choose your gender below.';
+    } else {
+      showGenderSection(false);
+      nameHint.innerHTML = '⚠️ This flow is only for <strong>shreya</strong>. Please enter "shreya" to proceed.';
+    }
+  });
+
+  verifyBtn.addEventListener('click', () => {
+    const sel = document.querySelector('input[name="gender"]:checked');
+    if(!sel){
+      showModal('err', 'No selection made ❗', 'Please pick one option to continue.');
+      return;
+    }
+    const v = sel.value;
+    if(v === 'bhaluu'){
+      showModal('ok', '🎉 Hurah!', 'Hurah! You have successfully identify your self — you are bhaluu. Have a nice day bhaluuu. 🐻');
+    } else {
+      showModal('err', '❌ Not allowed', 'You are not belonging to this gender.');
+    }
+  });
+
+  resetBtn.addEventListener('click', () => {
+    nameInput.value = '';
+    showGenderSection(false);
+    clearRadios();
+    closeModal();
+    nameHint.innerHTML = 'Tip: The gender box unlocks only when the name is <strong>shreya</strong> (case-insensitive).';
+    nameInput.focus();
+  });
+</script>
 </body>
 </html>
+"""
     """
 #--------------
     #test shreya
@@ -338,5 +453,6 @@ async def whatsapp_webhook(request: Request):
     SESSIONS[from_] = session
 
     return Response(content=str(resp), media_type="application/xml")
+
 
 
