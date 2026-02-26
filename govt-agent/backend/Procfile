@@ -1,1 +1,1 @@
-web: gunicorn app:app
+web: gunicorn govt_agent.backend.app:app
