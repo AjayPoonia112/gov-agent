@@ -2,15 +2,66 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Are you… Bhaluu? 🐻</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Are you Bhaluu? 🐻</title>
+  <{ url_for(
+  https://fonts.googleapis.com
+  https://fonts.gstatic.com
+  <link href="s.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap
+</head>
+<body>
+  <div class="bg-emoji" aria-hidden="true">✨</div>
+  <div class="container">
+    <header class="header">
+      <h1>Identity Checker <span class="wave">👋</span></h1>
+      <p class="tagline">Type your name to continue. Special flow for <strong>Shreya</strong> only. 💫</p>
+    </header>
 
-  https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libsn.css
+    <main class="card">
+      <label for="name" class="label">Your name</label>
+      <div class="input-row">
+        <input id="name" type="text" placeholder="e.g., Shreya" autocomplete="name" />
+        <button id="startBtn" class="btn primary" aria-label="Start">Start ▶️</button>
+      </div>
 
-  {{ url_for(
-  {{ url_for(
+      <section id="genderSection" class="hidden" aria-live="polite">
+        <label for="gender" class="label">Choose your gender <span class="spark">✨</span></label>
+        <select id="gender" class="select">
+          <option value="" selected disabled>-- Select one --</option>
+          <option value="female">Female ♀️</option>
+          <option value="male">Male ♂️</option>
+          <option value="angel">Angel 😇</option>
+          <option value="bhaluu" class="only-shreya">Bhaluu 🐻</option>
+        </select>
+      </section>
 
-  <!-- Confetti (CDN with local fallback) -->
-  <script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"
-          onerror="var s=document.createElement('script'); s.defer=true; s.src='{{ url_for('static', filename='js/canvas-confetti
+      <div id="message" class="message" role="status" aria-live="polite"></div>
+    </main>
+
+    <section class="channel card">
+      <h2>🎬 Channel</h2>
+      <p>Watch our featured Short and show some love! 💖</p>
+      <div class="video-wrapper">
+        <iframe 
+          title="YouTube Short"
+          src="https://www.youtube.com/embed/0yGxtEFgO5g" 
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscopeade with 💙, emojis, and tiny animations.</footer>
+  </div>
+
+  <!-- Success Modal -->
+  <div id="successModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="modalTitle" aria-modal="true">
+    <div class="modal-content">
+      <button class="modal-close" id="closeModal" aria-label="Close">✖️</button>
+      <h3 id="modalTitle">🎉 Hurah! 🎉</h3>
+      <p>Hurah you have successfully identify your self — you are <strong>BHALUU 🐻</strong>!</p>
+      <p>Have a nice day bhaluuu! 🌈✨</p>
+    </div>
+  </div>
+
+  <!-- Confetti Container -->
+  <div id="confetti" class="confetti" aria-hidden="true"></div>
+
+  {{ url_for(</script>
+</body>
+</html>
