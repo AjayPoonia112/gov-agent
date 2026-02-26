@@ -3,21 +3,19 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Heloooo… Bhaluu? 🐻</title>
+  <title>Are you… Bhaluu? 🐻</title>
 
   <!-- Fonts & Animations -->
-  <link href="https://apis.com/css2?family=Poppins:wght@400;600;800&display=swap
-  https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css
+  <ttps://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/ere, hard static path to avoid parser issues) -->
+  /static/favicon.ico
+  /static/css/styles.css
 
-  <!-- Favicon (optional; place static/favicon.ico to enable) -->
-  {{ url_for(
-
-  <!-- App Styles -->
-  <link rel="stylesheet" href="{{iny, client-side) -->
-  <script defer src="https://cdn.jsdelivr.net/npm/canvas-confettii.browser.min.js</script>
+  <!-- Confetti (tiny, client-side) -->
+  https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js</script>
 
   <!-- App JS -->
-  {{ url_for(</script>
+  /static/js/app.js</script>
 </head>
 <body>
   <!-- Floating emojis in background -->
@@ -53,7 +51,7 @@
     <section class="channel">
       <h2>🎬 Channel</h2>
       <p class="channel-meta">
-        <strong>{{ channel_name }}</strong> — 
+        <strong>{{ channel_name }}</strong> —
         {{ channel_url }}Open on YouTube ↗</a>
       </p>
 
@@ -62,10 +60,16 @@
         <iframe
           class="yt"
           src="https://www.youtube.com/embed/{{ video_id }}"
-          title="YouTube video"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-         div id="errorModal" class="modal hidden">
+         <p class="muted">
+        Video preview not available.
+        {{ channel_url }}Open link</a>
+      </p>
+      {% endif %}
+    </section>
+  </main>
+
+  <!-- Error Modal -->
+  <div id="errorModal" class="modal hidden">
     <div class="modal-card animate__animated animate__shakeX">
       <div class="modal-icon error">🚫</div>
       <h3>Oops!</h3>
@@ -88,14 +92,5 @@
   <footer class="footer">
     <span>Made with 💙 for fun — not a real-world identity checker.</span>
   </footer>
-
-  {# If you ever embed inline JS containing {{ or {% use raw/endraw to avoid Jinja parsing #}
-  {% raw %}
-  <!-- Example:
-  <script>
-    // code that might include {{ ... }}
-  </script>
-  -->
-  {% endraw %}
 </body>
 </html>
