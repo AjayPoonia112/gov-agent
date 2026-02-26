@@ -2,7 +2,7 @@ from flask import Flask, render_template
 import os
 from urllib.parse import urlparse
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="templates", static_folder="static")
 
 # --- Channel configuration (can be overridden by env vars) ---
 CHANNEL_NAME = os.getenv("CHANNEL_NAME", "My Channel")
@@ -52,3 +52,4 @@ def healthz():
 if __name__ == "__main__":
     # Render uses Gunicorn; this block is for local runs only
     app.run(host="0.0.0.0", port=int(os.getenv("PORT", 5000)))
+
