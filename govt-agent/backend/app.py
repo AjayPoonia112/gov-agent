@@ -55,7 +55,7 @@ app = FastAPI()
 
 @app.get("/", response_class=HTMLResponse)
 def home():
-    return """
+    return HTMLResponse(content="""
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -118,7 +118,10 @@ def home():
     background: rgba(255,255,255,0.06); color:var(--text); border:1px solid rgba(255,255,255,0.12);
   }
 
+  /* Gender section hidden by default; becomes visible with .show */
   .gender-wrap{ display:none; margin-top:12px; }
+  .gender-wrap.show{ display:block; }
+
   .genders{ display:flex; gap:10px; flex-wrap:wrap; }
   .radio{
     position:relative; display:inline-flex; align-items:center; gap:10px;
@@ -128,9 +131,11 @@ def home():
   }
   .radio input{ display:none; }
   .radio span{ opacity:0.9 }
-  .radio:has(input:checked){
-    outline:2px solid var(--accent2); background: rgba(56,189,248,0.1);
+  /* Style checked option (avoid :has for broader support) */
+  .radio input:checked + span{
+    outline:2px solid var(--accent2); border-radius:8px; padding:2px 6px;
     box-shadow: 0 6px 18px rgba(56,189,248,0.25);
+    background: rgba(56,189,248,0.1);
   }
 
   .footer{ color:var(--muted); text-align:center; margin-top:18px; font-size:12px; }
@@ -158,7 +163,6 @@ def home():
     position:absolute; top:10px; right:10px; border:0; background:transparent; color:var(--muted); font-size:20px; cursor:pointer;
   }
 
-  /* Simple confetti using emoji */
   .confetti{
     position:absolute; left:0; top:0; width:100%; height:100%; pointer-events:none; overflow:hidden;
   }
@@ -170,9 +174,8 @@ def home():
     100%{ transform: translateY(520px) rotate(420deg); opacity:0 }
   }
 
-  /* Video responsive wrapper */
   .video-wrap{
-    position: relative; padding-top: 56.25%; /* 16:9 */
+    position: relative; padding-top: 56.25%;
     width: 100%; border-radius: 16px; overflow: hidden; border:1px solid rgba(255,255,255,0.12);
     box-shadow: 0 10px 30px rgba(0,0,0,0.45); background: #0b1324; margin-top: 12px;
   }
@@ -208,10 +211,10 @@ def home():
       <div id="genderSection" class="gender-wrap">
         <div class="section-title" style="margin-top:14px;">🐻 Step 2: Choose your gender</div>
         <div class="genders" role="group" aria-label="Gender choices">
-          <label class="radio"> <input type="radio" name="gender" value="female" /> <span>💃 female</span> </label>
-          <label class="radio"> <input type="radio" name="gender" value="male" /> <span>🕺 male</span> </label>
-          <label class="radio"> <input type="radio" name="gender" value="angel" /> <span>😇 angel</span> </label>
-          <label class="radio"> <input type="radio" name="gender" value="bhaluu" /> <span>🐻 bhaluu</span> </label>
+          <label class="radio"> <input type="radio" name="gender" value="female" /><span>💃 female</span> </label>
+          <label class="radio"> <input type="radio" name="gender" value="male" /><span>🕺 male</span> </label>
+          <label class="radio"> <input type="radio" name="gender" value="angel" /><span>😇 angel</span> </label>
+          <label class="radio"> <input type="radio" name="gender" value="bhaluu" /><span>🐻 bhaluu</span> </label>
         </div>
         <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
           <button id="verify" class="btn btn-primary">Verify ✅</button>
@@ -220,7 +223,7 @@ def home():
       </div>
     </section>
 
-    <!-- Channel section (carried from your previous page) -->
+    <!-- Channel section -->
     <section class="grid">
       <div class="panel span-6">
         <div class="section-title">📣 Channel Spotlight</div>
@@ -234,9 +237,8 @@ def home():
         <div class="video-wrap">
           <iframe
             src="https://www.youtube.com/embed/0yGxtEFgO5g"
-           style="margin-top:10px;">
-          https://www.youtube.com/shorts/0yGxtEFgO5gOpen on YouTube ↗</a>
-        </div>
+            title="YouTube Shorts"
+            <a class="btn btn-ghost" href="https://www.youtube.com/shorts/0yGxtEFgO5</div>
       </div>
     </section>
 
@@ -264,32 +266,25 @@ def home():
   function isShreya(val){
     return (val || '').trim().toLowerCase() === 'shreya';
   }
-
-  function showGenderSection(show){
-    genderSection.style.display = show ? 'block' : 'none';
+  function toggleGenderSection(show){
+    if(show) genderSection.classList.add('show');
+    else genderSection.classList.remove('show');
   }
-
   function clearRadios(){
     document.querySelectorAll('input[name="gender"]').forEach(r => r.checked = false);
   }
-
   function showModal(type, title, message){
     const modal = document.getElementById('modal');
     const titleEl = document.getElementById('modalTitle');
     const msgEl = document.getElementById('modalMsg');
     const confetti = document.getElementById('confetti');
-
     titleEl.className = (type === 'ok') ? 'ok' : 'err';
     titleEl.textContent = title;
     msgEl.textContent = message;
-
-    // Reset confetti
     confetti.innerHTML = '';
     if(type === 'ok') {
-      // Simple emoji confetti
       const icons = ['🎉','✨','💫','🐻','🌟','🎊'];
-      const pieces = 60;
-      for(let i=0;i<pieces;i++){
+      for(let i=0;i<60;i++){
         const span = document.createElement('span');
         span.className = 'piece';
         span.textContent = icons[Math.floor(Math.random()*icons.length)];
@@ -302,25 +297,27 @@ def home():
     }
     modal.classList.add('show');
   }
-
   function closeModal(){
     document.getElementById('modal').classList.remove('show');
   }
 
-  // UX: Press Enter in the name input to continue
-  nameInput.addEventListener('keydown', (e) => {
-    if(e.key === 'Enter'){ nameGo.click(); }
+  // Show/hide while typing (live)
+  nameInput.addEventListener('input', () => {
+    const ok = isShreya(nameInput.value);
+    toggleGenderSection(ok);
+    nameHint.innerHTML = ok
+      ? '✅ Hi Shreya! Please choose your gender below.'
+      : '⚠️ This flow is only for <strong>shreya</strong>. Please enter "shreya" to proceed.';
   });
 
+  // Also support the Continue button + Enter
+  nameInput.addEventListener('keydown', (e) => { if(e.key === 'Enter'){ nameGo.click(); } });
   nameGo.addEventListener('click', () => {
-    const val = nameInput.value;
-    if(isShreya(val)){
-      showGenderSection(true);
-      nameHint.innerHTML = '✅ Hi Shreya! Please choose your gender below.';
-    } else {
-      showGenderSection(false);
-      nameHint.innerHTML = '⚠️ This flow is only for <strong>shreya</strong>. Please enter "shreya" to proceed.';
-    }
+    const ok = isShreya(nameInput.value);
+    toggleGenderSection(ok);
+    nameHint.innerHTML = ok
+      ? '✅ Hi Shreya! Please choose your gender below.'
+      : '⚠️ This flow is only for <strong>shreya</strong>. Please enter "shreya" to proceed.';
   });
 
   verifyBtn.addEventListener('click', () => {
@@ -339,7 +336,7 @@ def home():
 
   resetBtn.addEventListener('click', () => {
     nameInput.value = '';
-    showGenderSection(false);
+    toggleGenderSection(false);
     clearRadios();
     closeModal();
     nameHint.innerHTML = 'Tip: The gender box unlocks only when the name is <strong>shreya</strong> (case-insensitive).';
@@ -348,7 +345,7 @@ def home():
 </script>
 </body>
 </html>
-"""
+""", media_type="text/html")
 #--------------
     #test shreya
     #--------------------
@@ -452,6 +449,7 @@ async def whatsapp_webhook(request: Request):
     SESSIONS[from_] = session
 
     return Response(content=str(resp), media_type="application/xml")
+
 
 
 
