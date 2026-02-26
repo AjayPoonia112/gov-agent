@@ -6,13 +6,15 @@
   <title>Are you… Bhaluu? 🐻</title>
 
   <!-- Fonts & Animations -->
-  https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600=swap
   https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css
 
-  {{ url_for(
+  <link rel="icon" href="{{
 
   <!-- Confetti (tiny, client-side) -->
-  https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js</script>
+  <script defer src="https://m/canvas-confetti@1.9.3/dist/confetti.browser.min.js</script>
+
+  <!-- App JS -->
   {{ url_for(</script>
 </head>
 <body>
@@ -54,14 +56,12 @@
 
       {% if video_id %}
       <div class="video-wrap">
-        https://www.youtube.com/embed/{{ video_id }}
-        </iframe>
-      </div>
-      {% else %}
-      <p class="muted">Video preview not available. {{ channel_url }}Open link</a></p>
-      {% endif %}
-    </section>
-  </main>
+        <iframe
+          class="yt"
+          src="https://www.youtube.com/embed/{{ video_id }}"
+          title="YouTube video"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media
 
   <!-- Error Modal -->
   <div id="errorModal" class="modal hidden">
@@ -87,95 +87,15 @@
   <footer class="footer">
     <span>Made with 💙 for fun — not a real-world identity checker.</span>
   </footer>
-</body>
-</html><!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Are you… Bhaluu? 🐻</title>
 
-  <!-- Fonts & Animations -->
-  https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap
-  https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css
-
-  {{ url_for(
-
-  <!-- Confetti (tiny, client-side) -->
-  https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js</script>
-  {{ url_for(</script>
-</head>
-<body>
-  <!-- Floating emojis in background -->
-  <div class="bg-emoji">🎉</div>
-  <div class="bg-emoji delayed">🐻</div>
-  <div class="bg-emoji alt">✨</div>
-
-  <main class="card container animate__animated animate__fadeInUp">
-    <h1 class="title">Welcome, Friend! <span class="wave">👋</span></h1>
-    <p class="subtitle">Let’s see who you are today… <strong>Are you Bhaluu?</strong> 🐻</p>
-
-    <div class="form-row">
-      <label for="nameInput">Your name <span class="sparkle">✨</span></label>
-      <input id="nameInput" type="text" placeholder="Type your name (try 'shreya')" autocomplete="off" />
-    </div>
-
-    <div id="genderRow" class="form-row hidden animate__animated">
-      <label for="genderSelect">Choose your vibe <span class="sparkle">🌈</span></label>
-      <select id="genderSelect">
-        <option value="" selected disabled>— Select an option —</option>
-        <option value="female">Female 👩</option>
-        <option value="male">Male 👨</option>
-        <option value="angel">Angel 😇</option>
-        <option value="bhaluu">Bhaluu 🐻</option>
-      </select>
-    </div>
-
-    <div class="helper">Tip: The selector unlocks only if your name is <code>shreya</code> 😉</div>
-
-    <hr class="divider"/>
-
-    <section class="channel">
-      <h2>🎬 Channel</h2>
-      <p class="channel-meta">
-        <strong>{{ channel_name }}</strong> — 
-        {{ channel_url }}Open on YouTube ↗</a>
-      </p>
-
-      {% if video_id %}
-      <div class="video-wrap">
-        https://www.youtube.com/embed/{{ video_id }}
-        </iframe>
-      </div>
-      {% else %}
-      <p class="muted">Video preview not available. {{ channel_url }}Open link</a></p>
-      {% endif %}
-    </section>
-  </main>
-
-  <!-- Error Modal -->
-  <div id="errorModal" class="modal hidden">
-    <div class="modal-card animate__animated animate__shakeX">
-      <div class="modal-icon error">🚫</div>
-      <h3>Oops!</h3>
-      <p>This choice isn’t available here. Try again, explorer! 🐾</p>
-      <button class="btn" data-close="errorModal">Got it</button>
-    </div>
-  </div>
-
-  <!-- Success Modal -->
-  <div id="successModal" class="modal hidden">
-    <div class="modal-card animate__animated animate__heartBeat">
-      <div class="modal-icon success">🎊</div>
-      <h3>Hurrah! 🎉</h3>
-      <p>🎉 You have successfully identified yourself — <strong>you are bhaluu</strong>!<br/>
-         Have a nice day, bhaluuu! 🐻💛</p>
-      <button class="btn" data-close="successModal">Yay!</button>
-    </div>
-  </div>
-
-  <footer class="footer">
-    <span>Made with 💙 for fun — not a real-world identity checker.</span>
-  </footer>
+  {# If you later add inline JS that contains {{ or {% use raw/endraw to avoid Jinja conflicts #}
+  {% raw %}
+  <!-- Example guard: 
+  <script>
+    // code that might include {{ ... }} (keep inside raw/endraw)
+  </script>
+  -->
+  {% endraw %}
 </body>
 </html>
+``
