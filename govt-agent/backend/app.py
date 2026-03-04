@@ -9,7 +9,7 @@ HTML = r"""<!doctype html>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#6c2bd9" />
-  <title>Happy Holi, Bhaluu! 🐻🌈</title>
+  <title>Happy Holi, Ojaswini Mishra! 🐻🌈</title>
 
   <style>
     :root{
@@ -112,7 +112,7 @@ HTML = r"""<!doctype html>
 
   <div class="wrap pad">
     <header>
-      <h1>🌈 Happy Holi, <span class="chip">Bhaluu 🐻</span></h1>
+      <h1>🌈 Happy Holi, <span class="chip">Ojaswini Mishra 🐻</span></h1>
       <p class="tag">Colours, laughter, and blessings—let joy splash everywhere today!</p>
     </header>
 
@@ -205,3 +205,4 @@ def healthz():
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
+
