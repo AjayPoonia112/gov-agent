@@ -165,7 +165,7 @@ HTML = r"""<!doctype html>
       </div>
     </section>
 
-    <footer>Made with 💙, colours, and tiny animations. Happy Holi! 🎉</footer>
+    <footer>Created by Ajay Poonia. Happy Holi! 🎉</footer>
   </div>
 
   <div id="confetti" class="confetti" aria-hidden="true"></div>
@@ -383,4 +383,5 @@ def healthz():
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
+
 
