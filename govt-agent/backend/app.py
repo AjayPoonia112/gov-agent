@@ -109,7 +109,6 @@ button:hover{
       <p>
         May this beautiful day bring you endless joy, success, and happiness 🌸✨<br><br>
         May all your dreams come true, and your life be filled with love, laughter, and positivity 💖<br><br>
-        You deserve the best in everything — today and always 🌟
       </p>
 
       <p>
